@@ -1,23 +1,49 @@
-const Hello = (props) => {
+import { useState } from 'react'
+
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
+const Button = (props) => { 
   console.log(props)
+  const { handleClick, text } = props
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
   return (
     <div>
-      <p>
-        Hello {props.name}, you are {props.age} years old
-      </p>
+      button press history: {props.allClicks.join(' ')}
     </div>
   )
 }
 
-const App = () => {
-  const nimi = 'Pekka'
-  const ika = 10
+const App = (props) => {
+  const [value, setValue] = useState(10)
+
+  const handleClick = () => {
+    console.log('clicked the button')
+    setValue(0)
+  }
 
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={nimi} age={ika} />
+      {value}
+      <button onClick={handleClick}>button</button>
     </div>
   )
 }
