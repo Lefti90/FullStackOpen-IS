@@ -1,11 +1,15 @@
 const Course = (props) =>{
   console.log(props.course.parts[0].name)
+  const parts = props.course.parts
+  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises
+  console.log(total)
   return(
     <div>
       <h1>{props.course.name}</h1>
-      <p>{props.course.parts[0].name} {props.course.parts[0].exercises}</p>
-      <p>{props.course.parts[1].name} {props.course.parts[1].exercises}</p>
-      <p>{props.course.parts[2].name} {props.course.parts[2].exercises}</p>
+      <p>{parts[0].name} {parts[0].exercises}</p>
+      <p>{parts[1].name} {parts[1].exercises}</p>
+      <p>{parts[2].name} {parts[2].exercises}</p>
+      <p><b>total of {total} exercises </b></p>
     </div>
     )
 }
