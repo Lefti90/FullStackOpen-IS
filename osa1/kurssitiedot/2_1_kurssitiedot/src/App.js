@@ -1,8 +1,6 @@
 const Course = (props) =>{
-  console.log(props.course.parts[0].name)
   const parts = props.course.parts
-  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises
-  console.log(total)
+  const total = parts.reduce((sum, part) => console.log('what', sum, part) || sum + part.exercises, 0)
   return(
     <div>
       <h1>{props.course.name}</h1>
@@ -12,6 +10,7 @@ const Course = (props) =>{
       <p><b>total of {total} exercises </b></p>
     </div>
     )
+    //<p><b>total of {total} exercises </b></p>
 }
 
 const App = () => {
