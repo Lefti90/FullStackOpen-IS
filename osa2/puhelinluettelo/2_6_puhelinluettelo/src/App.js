@@ -1,14 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import { persons } from './components/personsData'
 
 const App = () => {
+  const [personsList, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
-  const [personsList, setPersons] = useState(persons)
+  //const [personsList, setPersons] = useState(persons)
 
+  //Effect hook
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  console.log('render', persons.length, 'persons')
+
+  //Change handlers
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -21,6 +36,7 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  //Adding person to array
   const addName = (event) => {
     event.preventDefault()
     if (personsList.map((person) => person.name).includes(newName)) {
@@ -37,6 +53,7 @@ const App = () => {
     }
   }
 
+  //Filter persons
   const filteredPersons = personsList.filter((person) =>
     person.name.toLowerCase().includes(newFilter.toLowerCase())
   )
