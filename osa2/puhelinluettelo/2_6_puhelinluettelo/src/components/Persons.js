@@ -12,6 +12,12 @@ const Persons = ({ persons, setPersons, errorMessage, setErrormessage }) => {
             setErrormessage(null)
           }, 5000)
         })
+        .catch(error => {
+          setErrormessage(`Error deleting ${name}: Already removed: ${error.message}`)
+          setTimeout(() => {
+            setErrormessage(null)
+          }, 5000)
+        })
     }
   }
 

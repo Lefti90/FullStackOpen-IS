@@ -70,6 +70,12 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
+          .catch(error => {
+            setErrormessage(`Error replacing ${newName}: ${error.message}`)
+            setTimeout(() => {
+              setErrormessage(null)
+            }, 5000)
+          })
       }
     } else {
       const nameObject = {
@@ -84,6 +90,12 @@ const App = () => {
         setTimeout(()=>{setErrormessage(null)},5000)
         setNewName('')
         setNewNumber('')
+      })
+      .catch(error => {
+        setErrormessage(`Error creating ${newName}: Already exists: ${error.message}`)
+        setTimeout(() => {
+          setErrormessage(null)
+        }, 5000)
       })
     }
   }
