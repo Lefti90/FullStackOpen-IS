@@ -9,35 +9,42 @@ const getAll = () => {
 }
 
 const Countries = (props) => {
-  //console.log(props.countries)
+  const handleCountryButtonClick = (country) => {
+    props.handleCountryButtonClick(country)
+  }
+
   if (props.countries !== null) {
     if (props.countries.length > 10) {
       return <p>Too many matches, specify another filter</p>
     } else if (props.countries.length > 1) {
       return (
-        <p>
+        <div>
           {props.countries.map((country) => (
-           <p> {country.name.common}</p>
+            <div key={country.name.common}>
+              {country.name.common} <button onClick={() => handleCountryButtonClick(country)}>
+                Show
+              </button>
+            </div>
           ))}
-        </p>
+        </div>
       )
     } else if (props.countries.length === 1) {
       const country = props.countries[0]
-      //console.log(country.languages)
       const languages = Object.values(country.languages)
       const flag = country.flags.png
-      console.log(flag)
       return (
         <div>
           <h1>{country.name.common}</h1>
           <p>capital: {country.capital}</p>
           <p>area: {country.area}</p>
           <h3>languages:</h3>
-          <ul>           
-            {languages.map(language => (<li key={language}>{language}</li>))}
+          <ul>
+            {languages.map((language) => (
+              <li key={language}>{language}</li>
+            ))}
           </ul>
           <p>
-          <img src={flag}></img>
+            <img src={flag} alt={country.name.common} />
           </p>
         </div>
       )
@@ -62,6 +69,10 @@ const App = () => {
     country.name && country.name.common.toLowerCase().includes(newCountry.toLowerCase())
   )
 
+  const handleCountryButtonClick = (country) => {
+    setNewCountry(country.name.common)
+  }
+
   return (
     <div>
       <form>
@@ -69,7 +80,10 @@ const App = () => {
           Find countries{' '}
           <input value={newCountry} onChange={handleCountryChange} />
         </div>
-        <Countries countries={filteredCountries} />
+        <Countries
+          countries={filteredCountries}
+          handleCountryButtonClick={handleCountryButtonClick}
+        />
       </form>
     </div>
   )
