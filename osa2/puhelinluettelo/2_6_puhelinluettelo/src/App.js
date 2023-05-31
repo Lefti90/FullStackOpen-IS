@@ -1,3 +1,4 @@
+import './index.css'
 import React, { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
@@ -8,7 +9,21 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
+  const [errorMessage, setErrormessage] = useState(null)
   //const [personsList, setPersons] = useState(persons)
+
+  //Better error message
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
 
   //Effect hook
   useEffect(() => {
@@ -50,6 +65,8 @@ const App = () => {
                 person.id === existingPerson.id ? response : person
               )
             )
+            setErrormessage(`${newName} updated`)
+            setTimeout(()=>{setErrormessage(null)},5000)
             setNewName('')
             setNewNumber('')
           })
@@ -63,6 +80,8 @@ const App = () => {
   
       serverModule.create(nameObject).then((response) => {
         setPersons([...personsList, response])
+        setErrormessage(`${newName} added`)
+        setTimeout(()=>{setErrormessage(null)},5000)
         setNewName('')
         setNewNumber('')
       })
@@ -77,6 +96,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={errorMessage}/>
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
@@ -92,7 +112,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} setPersons={setPersons}/>
+      <Persons persons={filteredPersons} setPersons={setPersons} setErrormessage={setErrormessage} />
     </div>
   )
 }

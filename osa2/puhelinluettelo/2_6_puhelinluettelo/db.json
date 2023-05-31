@@ -21,34 +21,9 @@
       "id": 4
     },
     {
-      "id": 9,
-      "name": "Ilkka",
-      "number": "123123123"
-    },
-    {
-      "id": 17,
-      "name": "qweqwr",
-      "number": "123"
-    },
-    {
-      "id": 21,
-      "name": "qwerty",
-      "number": "123456"
-    },
-    {
-      "id": 22,
-      "name": "qwertuy",
-      "number": "12354"
-    },
-    {
-      "id": 23,
-      "name": "qwertry",
-      "number": "12345"
-    },
-    {
-      "id": 10,
+      "id": 5,
       "name": "asd",
-      "number": "1234"
+      "number": "123123"
     }
   ]
 }
