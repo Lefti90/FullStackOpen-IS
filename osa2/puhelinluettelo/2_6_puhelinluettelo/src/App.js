@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
-import { persons } from './components/personsData'
+import serverModule from './components/ServerModule'
 
 const App = () => {
   const [personsList, setPersons] = useState([])
@@ -13,15 +12,8 @@ const App = () => {
 
   //Effect hook
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    serverModule.getAll().then(response => {setPersons(response)})
   }, [])
-  console.log('render', persons.length, 'persons')
 
   //Change handlers
   const handleNameChange = (event) => {
@@ -40,16 +32,16 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     if (personsList.map((person) => person.name).includes(newName)) {
-      alert(`${newName} is already added to phonebook`)
+      alert(`${newName} is already added to the phonebook`)
     } else {
       const nameObject = {
         id: personsList.length + 1,
         name: newName,
         number: newNumber,
       }
-      axios.post('http://localhost:3001/persons', nameObject).then(response => 
-      {console.log(response)
-        setPersons(persons.concat(response.data))
+      serverModule.create(nameObject).then(response => {
+        console.log(response)
+        setPersons([...personsList, response])
         setNewName('')
         setNewNumber('')
       })
