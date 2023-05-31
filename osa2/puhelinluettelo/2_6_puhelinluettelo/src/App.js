@@ -31,22 +31,44 @@ const App = () => {
   //Adding person to array
   const addName = (event) => {
     event.preventDefault()
-    if (personsList.map((person) => person.name).includes(newName)) {
-      alert(`${newName} is already added to the phonebook`)
+  
+    const existingPerson = personsList.find((person) => person.name === newName)
+  
+    if (existingPerson) {
+      const confirmReplace = window.confirm(
+        `${newName} is already added to the phonebook. Replace the old number with a new one?`
+      )
+  
+      if (confirmReplace) {
+        const updatedPerson = { ...existingPerson, number: newNumber }
+  
+        serverModule
+          .update(existingPerson.id, updatedPerson)
+          .then((response) => {
+            setPersons(
+              personsList.map((person) =>
+                person.id === existingPerson.id ? response : person
+              )
+            )
+            setNewName('')
+            setNewNumber('')
+          })
+      }
     } else {
       const nameObject = {
         id: personsList.length + 1,
         name: newName,
         number: newNumber,
       }
-      serverModule.create(nameObject).then(response => {
-        console.log(response)
+  
+      serverModule.create(nameObject).then((response) => {
         setPersons([...personsList, response])
         setNewName('')
         setNewNumber('')
       })
     }
   }
+  
 
   //Filter persons
   const filteredPersons = personsList.filter((person) =>
