@@ -48,6 +48,15 @@ const App = () => {
   //Adding person to array
   const addName = (event) => {
     event.preventDefault()
+
+    //Error handling for short names
+    if (newName.length < 3) {
+      setErrormessage('Name must be at least 3 letters long')
+      setTimeout(() => {
+        setErrormessage(null)
+      }, 5000)
+      return
+    }
   
     const existingPerson = personsList.find((person) => person.name === newName)
   
