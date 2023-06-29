@@ -15,6 +15,16 @@ const App = () => {
     )  
   }, [])
 
+  //if local storage has user info, do this
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
+
   //login
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -23,6 +33,8 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -34,6 +46,14 @@ const App = () => {
     }
   }
 
+  //logout
+  const handleLogout = (event) =>{
+    event.preventDefault()
+
+    window.localStorage.removeItem('loggedBlogAppUser')
+    window.location.reload()
+  }
+
 
   if (user !== null){
   //if logged in
@@ -41,6 +61,9 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <p>{user.name} logged in</p>
+      <p>
+        <button onClick={handleLogout}>Logout</button>
+      </p>
       <p></p>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
@@ -70,7 +93,7 @@ const App = () => {
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   )
