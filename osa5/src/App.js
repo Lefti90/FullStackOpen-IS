@@ -118,23 +118,22 @@ const App = () => {
   }
 
   //create blog
-  const createBlog = (blogObject) => {
+  const createBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then((returnedBlog) => {
-        setBlogs(blogs.concat(returnedBlog))
-        setMessage(`Added new blog: ${returnedBlog.title} by ${returnedBlog.author}`)
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
-      })
-      .catch((error) => {
-        setErrorMessage("Error creating new blog")
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      })
+    try {
+      const returnedBlog = await blogService.create(blogObject)
+      const blogWithUser = { ...returnedBlog, user: user }
+      setBlogs(blogs.concat(blogWithUser))
+      setMessage(`Added new blog: ${returnedBlog.title} by ${returnedBlog.author}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    } catch (exception) {
+      setErrorMessage("Error creating new blog")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
 
