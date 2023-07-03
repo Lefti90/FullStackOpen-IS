@@ -83,11 +83,29 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 
-blogsRouter.delete('/', async (request, response) => {
-  const { title } = request.body
+// old delete with title
+// blogsRouter.delete('/', async (request, response) => {
+//   const { title } = request.body
+
+//   try {
+//     const deletedBlog = await Blog.findOneAndDelete({ title })
+
+//     if (deletedBlog) {
+//       response.status(204).end()
+//     } else {
+//       response.status(404).json({ error: 'Blog not found' })
+//     }
+//   } catch (error) {
+//     response.status(500).json({ error: 'Something went wrong' })
+//   }
+// })
+
+//New delete with id
+blogsRouter.delete('/:id', async (request, response) => {
+  const { id } = request.params
 
   try {
-    const deletedBlog = await Blog.findOneAndDelete({ title })
+    const deletedBlog = await Blog.findByIdAndDelete(id)
 
     if (deletedBlog) {
       response.status(204).end()

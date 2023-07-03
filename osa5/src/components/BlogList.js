@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import Blog from "./Blog"
 
-const BlogList = () => {
+const BlogList = ({user, setErrorMessage, setMessage}) => {
   const [blogs, setBlogs] = useState([])
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -28,7 +29,7 @@ const BlogList = () => {
     <div>
       <button onClick={sortBlogsByLikes}>Sort by Likes</button>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={user} setMessage={setMessage} setErrorMessage={setErrorMessage}/>
       ))}
     </div>
   )

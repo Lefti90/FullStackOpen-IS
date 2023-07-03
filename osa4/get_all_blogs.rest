@@ -31,8 +31,8 @@
 # Content-Type: application/json
 
 # {
-#   "username" : "Testi",
-#   "name" : "user",
+#   "username" : "Kolmas",
+#   "name" : "Kolmas",
 #   "password" : "asd"
 # }
 
@@ -57,14 +57,17 @@
 #   "likes": 2
 # }
 
-PUT http://localhost:3000/api/blogs/649c0becfc8d51f486fd0b35
-Content-Type: application/json 
+# PUT http://localhost:3000/api/blogs/649c0becfc8d51f486fd0b35
+# Content-Type: application/json 
 
-{
-"title": "Test blog3",
-"author": "Ile",
-"url": "blogi3.com",
-"likes": 2,
-"user": "649c01074f2b28015e38bc73",
-"id": "649c0becfc8d51f486fd0b35"
-}
+# {
+# "title": "Test blog3",
+# "author": "Ile",
+# "url": "blogi3.com",
+# "likes": 2,
+# "user": "649c01074f2b28015e38bc73",
+# "id": "649c0becfc8d51f486fd0b35"
+# }
+
+#DELETE http://localhost:3000/api/blogs/649c0ee830f21fe16a3b9070
+
