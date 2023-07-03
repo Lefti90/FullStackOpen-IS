@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' //login
+import './app.css' //custom error message
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,6 +12,8 @@ const App = () => {
   const [title, setTitle] = useState('') //create blog
   const [author, setAuthor] = useState('') //create blog
   const [url, setUrl] = useState('') //create blog
+  const [errorMessage, setErrorMessage] = useState(null) //custom error message
+  const [message, setMessage] = useState(null) //custom succesful message
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -28,6 +31,28 @@ const App = () => {
     }
   }, [])
 
+  const Notification = () =>{
+    if (errorMessage === null && message === null){
+      return null
+    }
+
+    if (errorMessage !== null){
+      return (
+        <div className='error'>
+          {errorMessage}
+        </div>
+      )
+    }
+
+    if (message !== null){
+      return(
+      <div className='message'>
+        {message}
+      </div>
+      )
+    }
+  }
+
   //login
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -41,10 +66,14 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setMessage('Login succesful')
+      setTimeout(()=>{
+        setMessage(null)
+      }, 5000)
     } catch (exception) {
-      //setErrorMessage('wrong credentials')
+      setErrorMessage('Wrong username or password')
       setTimeout(() => {
-        //setErrorMessage(null)
+        setErrorMessage(null)
       }, 5000)
     }
   }
@@ -60,7 +89,7 @@ const App = () => {
   //create blog
   const createBlog = async (event) =>{
     event.preventDefault()
-    console.log(title, author, url)
+    //console.log(title, author, url)
     
     try {
       const newBlog = {
@@ -71,21 +100,29 @@ const App = () => {
   
       const createdBlog = await blogService.create(newBlog)
       setBlogs([...blogs, createdBlog])
-  
+      console.log('On send:',title, author)
+      setMessage(`Added new blog: ${title} by ${author}`)
       setTitle('')
       setAuthor('')
       setUrl('')
+      setTimeout(()=>{
+        setMessage(null)
+      }, 5000)
     } catch (exception) {
-      // Handle the error here
+      setErrorMessage('Error creating new blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
 
   if (user !== null){
   //if logged in
-  return (
+  return (    
     // Title and login status
     <div>
+      <Notification />
       <h2>Blogs</h2>
       <p>{user.name} logged in</p>
       <p>
@@ -115,7 +152,7 @@ const App = () => {
           />
         </div>
         <div>
-          author: 
+          url: 
             <input
             type="text"
             value={url}
@@ -135,6 +172,7 @@ const App = () => {
  }else{
   return(
     <div>
+    <Notification />
     <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
