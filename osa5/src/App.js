@@ -79,11 +79,7 @@ const App = () => {
     return(
       <Togglable buttonLabel='Create' ref={blogFormRef}>
         <BlogForm 
-        handleSubmit={createBlog}
-        // handleAuthorChange={({ target }) => setAuthor(target.value)}
-        // handleTitleChange={({ target }) => setTitle(target.value)}
-        // handleUrlChange={({ target }) => setUrl(target.value)}
-        />
+        handleBlogCreation={createBlog}/>
       </Togglable>
     )
   }
@@ -122,20 +118,23 @@ const App = () => {
   }
 
   //create blog
-  const createBlog = async (blogData) => {
-    try {
-      const createdBlog = await blogService.create(blogData)
-      setBlogs([...blogs, createdBlog])
-      setMessage(`Added new blog: ${createdBlog.title} by ${createdBlog.author}`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
-    } catch (exception) {
-      setErrorMessage("Error creating new blog")
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
+  const createBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
+    blogService
+      .create(blogObject)
+      .then((returnedBlog) => {
+        setBlogs(blogs.concat(returnedBlog))
+        setMessage(`Added new blog: ${returnedBlog.title} by ${returnedBlog.author}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      })
+      .catch((error) => {
+        setErrorMessage("Error creating new blog")
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
 
 
