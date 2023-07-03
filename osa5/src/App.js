@@ -6,6 +6,7 @@ import './app.css' //custom error message
 import LoginForm from './components/LoginForm' //togglable login form
 import Togglable from './components/Togglable' //togglable forms
 import BlogForm from './components/BlogForm' //togglable blog form
+import BlogList from './components/BlogList' //sort by likes
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -152,10 +153,11 @@ const App = () => {
     {/* New blog */}
       <TogglableBlog />
     </div>
-    {/* Blogs */}
-      {blogs.map(blog =>
+      <BlogList />
+    {/* Blogs - replaced by BlogList */}
+      {/* {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
-      )}
+      )} */}
     </div>
   )
  }else{
