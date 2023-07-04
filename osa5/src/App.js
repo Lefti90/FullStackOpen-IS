@@ -10,8 +10,8 @@ import BlogList from './components/BlogList' //sort by likes
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null) //login
   // const [title, setTitle] = useState('') //create blog
   // const [author, setAuthor] = useState('') //create blog
@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   //if local storage has user info, do this
@@ -37,7 +37,7 @@ const App = () => {
     }
   }, [])
 
-  const Notification = () =>{
+  const Notification = () => {
     if (errorMessage === null && message === null){
       return null
     }
@@ -52,9 +52,9 @@ const App = () => {
 
     if (message !== null){
       return(
-      <div className='message'>
-        {message}
-      </div>
+        <div className='message'>
+          {message}
+        </div>
       )
     }
   }
@@ -79,8 +79,8 @@ const App = () => {
 
     return(
       <Togglable buttonLabel='Create' ref={blogFormRef}>
-        <BlogForm 
-        handleBlogCreation={createBlog}/>
+        <BlogForm
+          handleBlogCreation={createBlog}/>
       </Togglable>
     )
   }
@@ -88,7 +88,7 @@ const App = () => {
   //login
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -99,7 +99,7 @@ const App = () => {
       setUsername('')
       setPassword('')
       setMessage('Login succesful')
-      setTimeout(()=>{
+      setTimeout(() => {
         setMessage(null)
       }, 5000)
     } catch (exception) {
@@ -111,7 +111,7 @@ const App = () => {
   }
 
   //logout
-  const handleLogout = (event) =>{
+  const handleLogout = (event) => {
     event.preventDefault()
 
     window.localStorage.removeItem('loggedBlogAppUser')
@@ -132,7 +132,7 @@ const App = () => {
         window.location.reload()
       }, 2000)
     } catch (exception) {
-      setErrorMessage("Error creating new blog")
+      setErrorMessage('Error creating new blog')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -142,40 +142,40 @@ const App = () => {
 
   if (user !== null){
   //if logged in
-  return (    
+    return (
     // Title and login status
-    <div>
-      <Notification />
-      <h2>Blogs</h2>
-      <p>{user.name} logged in</p>
-      <p>
-        <button onClick={handleLogout}>Logout</button>
-      </p>
       <div>
-    {/* New blog */}
-      <TogglableBlog />
-    </div>
-      <BlogList user={user} setErrorMessage={setErrorMessage} setMessage={setMessage}/>
-    {/* Blogs - replaced by BlogList */}
-      {/* {blogs.map(blog =>
+        <Notification />
+        <h2>Blogs</h2>
+        <p>{user.name} logged in</p>
+        <p>
+          <button onClick={handleLogout}>Logout</button>
+        </p>
+        <div>
+          {/* New blog */}
+          <TogglableBlog />
+        </div>
+        <BlogList user={user} setErrorMessage={setErrorMessage} setMessage={setMessage}/>
+        {/* Blogs - replaced by BlogList */}
+        {/* {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )} */}
-    </div>
-  )
- }else{
-  return(
-    <div>
-    <Notification />
-    {/* Login form */}
-    <LoginForm
+      </div>
+    )
+  }else{
+    return(
+      <div>
+        <Notification />
+        {/* Login form */}
+        <LoginForm
           username={username}
           password={password}
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
           handleSubmit={handleLogin}/>
-    </div>
-  )
- }
+      </div>
+    )
+  }
 }
 
 export default App

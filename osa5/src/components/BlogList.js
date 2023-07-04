@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
-import Blog from "./Blog"
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Blog from './Blog'
 
-const BlogList = ({user, setErrorMessage, setMessage}) => {
+const BlogList = ({ user, setErrorMessage, setMessage }) => {
   const [blogs, setBlogs] = useState([])
 
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("/api/blogs")
+        const response = await axios.get('/api/blogs')
         setBlogs(response.data)
       } catch (error) {
-        console.log("Error fetching blogs:", error)
+        console.log('Error fetching blogs:', error)
       }
     }
 

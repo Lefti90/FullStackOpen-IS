@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   const [showDetails, setShowDetails] = useState(false)
@@ -9,12 +9,12 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   useEffect(() => {
     const getLoggedInUser = async () => {
       try {
-        const response = await axios.get("/api/users")
+        const response = await axios.get('/api/users')
         const users = response.data
         const loggedInUser = users.find(u => u.username === user.username) //match with username
         setLoggedInUser(loggedInUser)
       } catch (error) {
-        console.log("Error getting logged-in user:", error)
+        console.log('Error getting logged-in user:', error)
       }
     }
 
@@ -28,7 +28,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
   }
@@ -39,18 +39,18 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
       const url = `/api/blogs/${blog.id}`
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
       await axios.put(url, updatedBlog, config)
       setMessage('Thanks for a like!')
-      setTimeout(()=>{
+      setTimeout(() => {
         setMessage(null)
         window.location.reload()
       }, 2000)
     } catch (error) {
       setErrorMessage('Error updating blog')
-      console.log("Error updating blog:", error)
+      console.log('Error updating blog:', error)
     }
   }
 
@@ -63,17 +63,17 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
       const url = `/api/blogs/${blog.id}`
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
       await axios.delete(url, config)
       setMessage('Blog deleted!')
-      setTimeout(()=>{
+      setTimeout(() => {
         setMessage(null)
         window.location.reload()
       }, 2000)
     } catch (error) {
-      console.log("Error deleting blog:", error)
+      console.log('Error deleting blog:', error)
     }
   }
 
@@ -81,7 +81,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
     <div style={blogStyle}>
       <div>
         {blog.title} by {blog.author}
-        <button onClick={toggleDetails}>{showDetails ? "Hide" : "Show"} details</button>
+        <button onClick={toggleDetails}>{showDetails ? 'Hide' : 'Show'} details</button>
       </div>
       {showDetails && (
         <div>
