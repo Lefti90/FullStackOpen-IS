@@ -14,11 +14,15 @@ test('renders content', () => {
     username: 'mluukkai'
   }
 
-  render(<Blog blog={blog} user={user}/>)
+  const { container } = render(<Blog blog={blog} user={user}/>)
+  const div = container.querySelector('.blog')
+  expect(div).toHaveTextContent(blog.title)
+
+  // render(<Blog blog={blog} user={user}/>)
 
   //screen.debug()
 
-  const element = screen.getByText(blog.title)
-  expect(element).toBeDefined()
+  //const element = screen.getByText(blog.title)
+  //expect(element).toBeDefined()
 })
 

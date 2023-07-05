@@ -7,7 +7,6 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
 
   // Get logged in user
   useEffect(() => {
-    console.log('Blog: ', blog)
     const getLoggedInUser = async () => {
       try {
         const response = await axios.get('/api/users')
@@ -79,7 +78,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div>
         {blog.title} by {blog.author}
         <button onClick={toggleDetails}>{showDetails ? 'Hide' : 'Show'} details</button>
