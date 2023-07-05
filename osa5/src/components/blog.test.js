@@ -1,8 +1,7 @@
-/* eslint-disable no-undef */
-const React = require('react')
-require('@testing-library/jest-dom/extend-expect')
-const { render, screen } = require('@testing-library/react')
-const Blog = require('./Blog')
+import React from 'react'
+import '@testing-library/jest-dom/extend-expect'
+import { render, screen } from '@testing-library/react'
+import Blog from './Blog'
 
 test('renders content', () => {
   const blog = {
@@ -12,7 +11,7 @@ test('renders content', () => {
 
   render(<Blog blog={blog}/>)
 
-  screen.debug()
+  //screen.debug()
 
   const element = screen.getByText(blog.title)
   expect(element).toBeDefined()
