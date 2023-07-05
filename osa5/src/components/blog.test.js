@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
@@ -9,7 +10,11 @@ test('renders content', () => {
     author: 'Rehtori'
   }
 
-  render(<Blog blog={blog}/>)
+  const user ={
+    username: 'mluukkai'
+  }
+
+  render(<Blog blog={blog} user={user}/>)
 
   //screen.debug()
 

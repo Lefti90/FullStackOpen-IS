@@ -7,6 +7,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
 
   // Get logged in user
   useEffect(() => {
+    console.log('Blog: ', blog)
     const getLoggedInUser = async () => {
       try {
         const response = await axios.get('/api/users')

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 module.exports = {
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-  },
+    '^.+\\.(js|jsx)$': 'babel-jest'
+  }
 }
