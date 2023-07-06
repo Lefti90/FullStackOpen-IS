@@ -22,7 +22,6 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   }, [user.username])
 
   const toggleDetails = () => {
-    console.log('toggled details')
     setShowDetails(!showDetails)
   }
 
@@ -43,12 +42,13 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
           'Content-Type': 'application/json',
         },
       }
-      await axios.put(url, updatedBlog, config)
       setMessage('Thanks for a like!')
+      blog.likes = blog.likes + 1
       setTimeout(() => {
         setMessage(null)
         //window.location.reload()
-      }, 2000)
+      }, 0)
+      await axios.put(url, updatedBlog, config)
     } catch (error) {
       setErrorMessage('Error updating blog')
       console.log('Error updating blog:', error)
