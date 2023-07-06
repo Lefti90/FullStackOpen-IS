@@ -3,26 +3,38 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
 import Blog from './Blog'
+import userEvent from '@testing-library/user-event'
+import axios from 'axios' //Import accios to access logged in user
 
-test('renders content', () => {
+jest.mock('axios')
+
+test('clicking the button calls event handler once', async () => {
   const blog = {
     title: 'Jepuan prinssi',
-    author: 'Rehtori'
+    author: 'Rehtori',
+    user: 'Matti Luukkainen'
   }
 
-  const user ={
+  const loggedInUser ={
     username: 'mluukkai'
   }
 
-  const { container } = render(<Blog blog={blog} user={user}/>)
-  const div = container.querySelector('.blog')
-  expect(div).toHaveTextContent(blog.title)
+  const mockHandler = jest.fn()
 
-  // render(<Blog blog={blog} user={user}/>)
+  //get logged in user
+  axios.get.mockResolvedValue({ data: [{ username: loggedInUser.username }] })
 
-  //screen.debug()
+  render(
+    <Blog
+      blog={blog}
+      user={loggedInUser}
+      toggleDetails={mockHandler}
+    />
+  )
 
-  //const element = screen.getByText(blog.title)
-  //expect(element).toBeDefined()
+  const useri = userEvent.setup()
+  const button = screen.getByText('Show details')
+  await useri.click(button)
+
+  expect(screen.findByText('Hide details')).toBeDefined()
 })
-

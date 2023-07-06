@@ -22,6 +22,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   }, [user.username])
 
   const toggleDetails = () => {
+    console.log('toggled details')
     setShowDetails(!showDetails)
   }
 
@@ -46,7 +47,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
       setMessage('Thanks for a like!')
       setTimeout(() => {
         setMessage(null)
-        window.location.reload()
+        //window.location.reload()
       }, 2000)
     } catch (error) {
       setErrorMessage('Error updating blog')
@@ -78,7 +79,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
   }
 
   return (
-    <div style={blogStyle} className='blog'>
+    <div style={blogStyle} className='blog' data-testid="blog-component">
       <div>
         {blog.title} by {blog.author}
         <button onClick={toggleDetails}>{showDetails ? 'Hide' : 'Show'} details</button>
