@@ -87,7 +87,7 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
       {showDetails && (
         <div>
           <div>{blog.url}</div>
-          <div>
+          <div id='likesDiv'>
             Likes: {blog.likes} <button onClick={handleLike} id='likeButton'>Like</button>
           </div>
           <div>Added by {blog.user.name}</div>

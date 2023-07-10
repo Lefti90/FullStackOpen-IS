@@ -27,7 +27,7 @@ const BlogList = ({ user, setErrorMessage, setMessage }) => {
 
   return (
     <div>
-      <button onClick={sortBlogsByLikes}>Sort by Likes</button>
+      <button id='sortButton' onClick={sortBlogsByLikes}>Sort by Likes</button>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} user={user} setMessage={setMessage} setErrorMessage={setErrorMessage}/>
       ))}
