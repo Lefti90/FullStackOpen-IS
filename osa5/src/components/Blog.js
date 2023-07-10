@@ -82,20 +82,20 @@ const Blog = ({ blog, user, setMessage, setErrorMessage }) => {
     <div style={blogStyle} className='blog' data-testid="blog-component">
       <div>
         {blog.title} by {blog.author}
-        <button onClick={toggleDetails}>{showDetails ? 'Hide' : 'Show'} details</button>
+        <button onClick={toggleDetails} id='toggleDetails'>{showDetails ? 'Hide' : 'Show'} details</button>
       </div>
       {showDetails && (
         <div>
           <div>{blog.url}</div>
           <div>
-            Likes: {blog.likes} <button onClick={handleLike}>Like</button>
+            Likes: {blog.likes} <button onClick={handleLike} id='likeButton'>Like</button>
           </div>
           <div>Added by {blog.user.name}</div>
           {/* {console.log('Logged-in User ID:', loggedInUser && loggedInUser.id)}
           {console.log(user.username)}
           {console.log('Blog User ID:', blog.user && blog.user.id)} */}
           {user && loggedInUser && loggedInUser.id === blog.user.id && (
-            <button onClick={deleteBlog}>Delete</button>
+            <button onClick={deleteBlog} id='deleteButton'>Delete</button>
           )}
         </div>
       )}
