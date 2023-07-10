@@ -127,7 +127,7 @@ describe('Blog ', function() {
     cy.get('#deleteButton').should('not.exist')
   })
 
-  it.only('Sort by likes works as intended', function(){
+  it('Sort by likes works as intended', function(){
     //This test is very janky, I know
     //post some blogs
     cy.contains('Create').click()
